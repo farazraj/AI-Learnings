@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Spam Classifier</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 60px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+    }
+    h2 {
+      text-align: center;
+    }
+    textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    #result {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: green;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>Spam Message Detector</h2>
+  <form id="spamForm">
+    <label for="message">Enter your message:</label>
+    <textarea id="message" name="message" rows="4" required></textarea>
+    <button type="submit">Check</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    const form = document.getElementById("spamForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const message = document.getElementById("message").value;
+
+      // Send POST request (as JSON)
+      const response = await fetch("http://127.0.0.1:8000/predict_json_or_form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: message })
+      });
+
+      const data = await response.json();
+      resultDiv.innerText = "Prediction: " + data.prediction;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+from fastapi import FastAPI, Form, Request
+from pydantic import BaseModel
+import joblib
+import pandas as pd
+
+# Load the trained model and vectorizer
+model = joblib.load("../NLP/spam_model.pkl")
+vectorizer = joblib.load("../NLP/vectorizer.pkl")
+
+
+# Define input schema
+class MessageInput(BaseModel):
+    message: str
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Spam Classifier API is running!"}
+
+#call the model using JSON input
+@app.post("/predict_json")
+def predict_spam(data: MessageInput):
+    vec_msg = vectorizer.transform([data.message])
+    prediction = model.predict(vec_msg)[0]
+    return {
+        "prediction": "Spam" if prediction == 1 else "Ham"
+    }
+
+
+# Call the model using form data
+@app.post("/predict_form")
+def predict(message: str = Form(...)):
+    vec_msg = vectorizer.transform([message])
+    pred = model.predict(vec_msg)[0]
+    result = "Spam" if pred == 1 else "Ham"
+    return {"prediction": result}
+
+
+
+# Call the model using either JSON or form data
+@app.post("/predict_json_or_form")
+async def predict(request: Request, message: str = Form(None)):
+    if request.headers.get("content-type", "").startswith("application/json"):
+        data = await request.json()
+        message = data.get("message")
+    elif message is None:
+        return {"error": "No message provided"}
+
+    vec_msg = vectorizer.transform([message])
+    pred = model.predict(vec_msg)[0]
+    result = "Spam" if pred == 1 else "Ham"
+    return {"prediction": result}
