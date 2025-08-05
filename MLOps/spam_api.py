@@ -24,7 +24,7 @@ def predict_spam(data: MessageInput):
     vec_msg = vectorizer.transform([data.message])
     prediction = model.predict(vec_msg)[0]
     return {
-        "prediction": "Spam" if prediction == 1 else "Ham"
+        "prediction": "Spam Message" if prediction == 1 else "Genuine Message"
     }
 
 
@@ -33,7 +33,7 @@ def predict_spam(data: MessageInput):
 def predict(message: str = Form(...)):
     vec_msg = vectorizer.transform([message])
     pred = model.predict(vec_msg)[0]
-    result = "Spam" if pred == 1 else "Ham"
+    result = "Spam Message" if pred == 1 else "Genuine Message"
     return {"prediction": result}
 
 
@@ -49,5 +49,5 @@ async def predict(request: Request, message: str = Form(None)):
 
     vec_msg = vectorizer.transform([message])
     pred = model.predict(vec_msg)[0]
-    result = "Spam" if pred == 1 else "Ham"
+    result = "Spam Message" if pred == 1 else "Genuine Message"
     return {"prediction": result}
