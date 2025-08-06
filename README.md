@@ -1,1 +1,1 @@
-These repository contains my learnings and projects regarding AI.
+The repository contains my learnings and projects regarding AI.
