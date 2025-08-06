@@ -1,1 +1,4 @@
 /nlml_env/
+*.tar
+*.tar.gz
+*.zip
