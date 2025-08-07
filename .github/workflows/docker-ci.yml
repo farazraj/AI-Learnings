@@ -2,7 +2,7 @@ name: Build & Push Docker Image
 
 on:
   push:
-    branches: [ master ]  # Or 'main' if your repo uses that
+    branches: [ master ]  # Or 'main' if applicable
 
 jobs:
   build:
@@ -19,5 +19,4 @@ jobs:
       run: docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/ai-learnings:latest MLOps/Docker
 
     - name: Push Docker image
-      run: docker push ghcr.io/${{ github.repository }}:latest
-
+      run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/ai-learnings:latest
