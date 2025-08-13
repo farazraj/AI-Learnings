@@ -130,10 +130,56 @@ colors in matplotlib:
 
 """
 
+#to use shortcut for marker|line|color and also give marker size
 def mkr_size():
     ypoints = np.array([3, 8, 1, 10])
 
     plt.plot(ypoints, 's--k', ms = 7)
     plt.show()
 
-mkr_size()
+#to show marker, size and marker edge color differently
+def mkr_size2():
+    ypoints = np.array([3, 8, 1, 10])
+    jpoints = np.array([1, 2, 3, 4])
+    fpoints = np.array([5, 8, 4, 2])
+    plt.plot(ypoints, marker = 's', ms = 10, mec = 'r', mfc = 'k', linestyle = '--')
+    plt.plot(jpoints, marker = '*', ms = 10, mec = '#4CAF50', mfc = '#4CAF50', linestyle = ':', color = 'k')
+    plt.plot(fpoints, marker = 'o', ms = 10, mec = 'hotpink', mfc = 'hotpink', linestyle = '-', color = 'g')
+    
+    plt.show()
+
+#to set labels and title
+def lables_title():
+    ypoints = np.array([2, 4, 6, 8, 10])
+    plt.plot(ypoints, marker = 'o', ls = '-', color = 'cyan', ms = 15, lw = 5 )
+
+    #to set the font style of the labels and title
+    font1 = {'family':'serif','color':'blue','size':20}
+    font2 = {'family':'serif','color':'darkred','size':15}
+    
+    #loc can be use to positions title and labels
+    #loc = 'left' | 'right' | 'center' | 'top'
+    plt.title("Show Titles", fontdict = font1, loc='center')
+    plt.xlabel("X-axis Label", fontdict = font2, loc='center')
+    plt.ylabel("Y-axis Label", fontdict = font2, loc='center')
+    plt.show()
+
+
+#to show grid in the plot
+def grid():
+    fpoints = np.array([2, 4, 6, 8, 10])
+    jpoints = np.array([1, 3, 5, 7, 9])
+    plt.plot(fpoints, jpoints, marker = 'o', ls = '-', color = 'cyan', ms = 15, lw = 2 )
+
+    #to set the font style of the labels and title
+    font1 = {'family':'serif','color':'blue','size':20}
+    font2 = {'family':'serif','color':'darkred','size':15}
+    
+    plt.title("Show Titles", fontdict = font1, loc='center')
+    plt.xlabel("X-axis Label", fontdict = font2, loc='center')
+    plt.ylabel("Y-axis Label", fontdict = font2, loc='center')
+
+    #to show grid
+    plt.grid(color = 'red', ls = '-.', lw = 1) #color, linestyle, linewidth, alpha
+    
+    plt.show()
