@@ -424,6 +424,60 @@ def size_and_alpha():
     plt.show()
 
 
+#to show the bar plot
+def bar_plot():
+    print("This is a bar plot function")
+    #example of scatter plot
+    x = np.array([5,7,8,7,2,17,2,9,4,11,12,9,6])
+    y = np.array([99,86,87,88,111,86,103,87,94,78,77,85,86])
+    plt.bar(x, y, color = 'blue', width = 0.5) #width is the width of the bar
+
+    
+    plt.title("Diffrence b/w car's age and speed", loc='center')
+    plt.xlabel("Age of Cars", loc='center')
+    plt.ylabel("Speed of Cars", loc='center')
+    plt.show()
 
 
+#to show the bar plot
+def bar_plot_hz():
+    print("This is a horizontal bar plot function")
+    #example of bar plot
+    y = np.array([5,7,8,7,2,17,2,9,4,11,12,9,6])
+    x = np.array([99,86,87,88,111,86,103,87,94,78,77,85,86])
+    plt.barh(x, y, color = 'red', height=0.1) #width is the width of the bar
+
+    
+    plt.title("Diffrence b/w car's age and speed", loc='center')
+    plt.ylabel("Age of Cars", loc='center')
+    plt.xlabel("Speed of Cars", loc='center')
+    plt.show()
+
+
+#to show the pie chart
+def pie_chart():
+    print("This is a pie chart function")
+    #example of pie chart
+    y = np.array([35, 25, 25, 15])
+    mylabels = ["Apples", "Bananas", "Cherries", "Dates"]
+    
+    plt.pie(y, labels = mylabels, autopct='%1.1f%%') # #autopct is used to show the percentage of each slice
+    plt.legend(title = "Fruits", loc = 'upper right') #to show the legend of the pie chart
+    plt.title("Pie Chart Example", loc='center') #to show the title of the pie chart
+    plt.show() 
+
+
+#to show the pie chart with explode effect
+def pie_chart_explode():
+    print("This is a pie chart function")
+    #example of pie chart
+    y = np.array([35, 25, 25, 15])
+    mylabels = ["Apples", "Bananas", "Cherries", "Dates"]
+    myexplode = [0.2, 0, 0, 0] #to explode the first slice of the pie chart
+    
+    plt.pie(y, labels = mylabels, autopct='%1.1f%%', explode = myexplode, shadow = True) # #autopct is used to show the percentage of each slice
+    plt.legend(title = "Fruits", loc= "upper left") #to show the legend of the pie chart loc options = 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
+    plt.title("Pie Chart Example", loc='center') #to show the title of the pie chart
+    plt.axis('equal') #to make the pie chart a circle
+    plt.show() 
 
