@@ -55,4 +55,4 @@ def preprocess_text(text, use_stemming=True, use_lemmatization=False):
     return processed
 
 
-print(preprocess_text("Hi There, don't try to act smart", False, True))
+# print(preprocess_text("Hi There, don't try to act smart", False, True))
