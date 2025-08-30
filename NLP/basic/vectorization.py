@@ -6,6 +6,7 @@ from gensim.models import Word2Vec
 import numpy as np
 
 
+#text to preprocess and vectorize
 document = [
     "I love NLP and machine learning.",
     "NLP is amazing for text processing.",
@@ -13,8 +14,12 @@ document = [
 ]
 
 
+#Preprocessing of the text
 prep_text = preprocess_text(''.join(document), use_stemming=False, use_lemmatization=True)
 print("prep_text:", prep_text)
+
+
+#Different vectorization techniques
 
 # Bag of Words
 def bag_of_words(docs):
@@ -69,4 +74,7 @@ def word2vec_embeddings(docs):
     print("W2V doc vectors shape:", doc_vecs_w2v.shape)   # (3, 100)
 
 
-bag_of_words(prep_text)
+# bag_of_words(prep_text)
+# tfidf(prep_text)
+# spacy_embeddings(prep_text)
+word2vec_embeddings(document)  # use original docs for Word2Vec
