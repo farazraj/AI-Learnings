@@ -10,7 +10,7 @@ There are certain steps to follow it on the basis of certain algos and processin
 import pandas as pd
 
 #Load dataset
-df = pd.read_csv("IMDB_Dataset.csv")
+df = pd.read_csv("IMDB Dataset.csv")
 
 print(df.head()) #prints first 5 rows of the dataset
 print(df.info()) #prints info about the dataset
