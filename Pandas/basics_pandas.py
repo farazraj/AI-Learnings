@@ -181,4 +181,17 @@ def relation_columns():
     print(df.corr().to_string(), "\n") #prints the relation between two columns
 
 
-relation_columns()
+#query - to filter data based on a condition
+
+def query_data():
+    df = pd.read_csv('data_clean.csv')
+
+    print(df.to_string(), "\n") #prints the whole dataframe
+
+    df = df.query('Calories > 400')
+
+    print("after query - ")
+    print(df.to_string(), "\n") #prints the whole dataframe
+
+
+query_data()
