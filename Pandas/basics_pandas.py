@@ -193,5 +193,19 @@ def query_data():
     print("after query - ")
     print(df.to_string(), "\n") #prints the whole dataframe
 
+def slicing():
+    df = pd.read_csv('data_clean.csv')
 
-query_data()
+    print(df.to_string(), "\n") #prints the whole dataframe
+
+    print("slicing the first two rows of the dataframe - ")
+    print(df.iloc[0:2].to_string(), "\n") #prints the first two rows of the dataframe
+    print("slicing all the rows of the dataframe and first two columns - ")
+    print(df.iloc[:, 0:2].to_string(), "\n") #prints all the rows of the dataframe and first two columns
+    print("slicing specific element at row 2 and column 3 - ")
+    print(df.iloc[2,3], "\n") #specific element at row 2 and column 3
+    print("slicing using conditions - ")
+    print(df[df['Calories'] > 400].iloc[:, :].to_string(), "\n") #slicing using conditions
+
+
+slicing()
