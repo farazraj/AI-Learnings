@@ -208,4 +208,38 @@ def slicing():
     print(df[df['Calories'] > 400].iloc[:, :].to_string(), "\n") #slicing using conditions
 
 
-slicing()
+#to concatenate two dataframes
+def concat():
+    df1 = pd.read_csv('dc1.csv')
+    df2 = pd.read_csv('dc2.csv')
+
+    frames = [df1, df2]
+
+    result = pd.concat(frames)
+
+    print("result after concatenation - ")
+    print(result.to_string(), "\n")
+
+
+def concat_series_w_df():
+    df = pd.read_csv('dc1.csv')
+
+    df1 = df.loc[0:2] #slicing first three rows of dataframe
+
+    print("dataframe - ")
+    print(df1.to_string(), "\n")
+    
+    #creating a series
+    s = pd.Series(['Day1', 'Day2', 'Day3'], name='Days')
+
+    frames = [df1,s]
+
+    rs = pd.concat(frames, axis=1) #axis=1 to concatenate along columns
+
+   
+
+    print("result after concatenation of series with dataframe - ")
+    print(rs.to_string(), "\n")
+
+
+concat_series_w_df()
