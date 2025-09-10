@@ -1,3 +1,6 @@
 /nlml_env/
 *.tar
 *.tar.gz
+/empenv/
+/cl_env/
+*.gz

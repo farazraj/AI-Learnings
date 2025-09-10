@@ -1,0 +1,38 @@
+{% extends "nav.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+<div class="jumbotron">
+  <h1>{% if employee %}Update Employee{% else %}Add Employee{% endif %}</h1>
+
+  <form action="{% if employee %}{% url 'update_employee' employee.id %}{% else %}/{% endif %}" method="post">
+    {% csrf_token %}
+
+    <label for="name">Name</label><br>
+    <input type="text" id="name" name="name" 
+           value="{{ employee.name|default:'' }}" 
+           placeholder="Employee Name" required><br><br>
+
+    <label for="phone">Phone</label><br>
+    <input type="tel" id="phone" name="phone" maxlength="12" 
+           value="{{ employee.phone|default:'' }}" 
+           placeholder="Employee Phone Number" required><br><br>
+
+    <button type="submit" class="btn btn-primary">
+      {% if employee %}Update{% else %}Submit{% endif %}
+    </button>
+  </form>
+
+  <br><br>
+
+  <script>
+    $(function() {
+      $("#name").autocomplete({
+        source: "{% url 'autocomplete_search' %}"
+      });
+    });
+  </script>
+</div>
+{% endblock body %}
