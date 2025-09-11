@@ -38,7 +38,12 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 # Cookie-based session settings
 SESSION_COOKIE_HTTPONLY = True  # Prevent JavaScript from accessing the session cookie
 SESSION_COOKIE_SECURE = True    # Use HTTPS to transfer the cookie
-SESSION_COOKIE_AGE = 1209600    # Set the session to expire in 2 weeks (in seconds)
+SESSION_COOKIE_AGE = 3600    # Set the session to expire in 2 weeks (in seconds)
+
+# Reset the session timer with every request
+SESSION_SAVE_EVERY_REQUEST = True
+
+               
 
 
 # Application definition
@@ -61,7 +66,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # 👈 Add this
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # 👈 Add this for whitenoise
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",

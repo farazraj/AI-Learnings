@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% extends "nav.html" %}
+{% load static %}
+
+{% block title %}Employee Bulk Addition{% endblock title %}
+
+{% block body %}
+<div class="container mt-4">
+  <div class="card shadow-lg border-0 rounded-lg">
+    <div class="card-header bg-dark text-white">
+      <h3 class="mb-0">Employee Bulk Addition</h3>
+    </div>
+    <div class="card-body">
+      
+      <!-- Upload Form -->
+      <form method="post" enctype="multipart/form-data" class="mb-4">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="csv_file" class="font-weight-bold">Upload CSV file:</label>
+          <input type="file" class="form-control-file" id="csv_file" name="csv_file" required>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-upload"></i> Upload
+        </button>
+      </form>
+
+      <!-- Sample Download -->
+      <p class="mb-4">
+        Need a sample? 
+        <a href="{% static 'sample_contacts.csv' %}" download class="btn btn-outline-info btn-sm">
+          <i class="fa fa-download"></i> Download Sample CSV (100 contacts)
+        </a>
+      </p>
+
+      <!-- Status Section -->
+      <h5>Status:</h5>
+      <div id="status-box" class="border rounded p-3 bg-light" style="min-height: 60px;">
+        <small class="text-muted">No updates yet…</small>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- WebSocket Script -->
+<script>
+  console.log("Opening WebSocket…");  // debug
+  const statusBox = document.getElementById("status-box");
+  const ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
+  const ws_url = ws_scheme + "://" + window.location.host + "/ws/status/";
+  console.log("Connecting to:", ws_url);
+
+  const ws = new WebSocket(ws_url);
+
+  ws.onopen = function() {
+    console.log("✅ WebSocket connected!");
+  };
+
+  ws.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    if (data.message.startsWith("✅")) {
+      // final result, append as a new line
+      const p = document.createElement("p");
+      p.textContent = data.message;
+      statusBox.appendChild(p);
+    } else {
+      // live progress -> update single line
+      statusBox.textContent = data.message;
+    }
+  };
+
+  ws.onerror = function(err) {
+    console.error("WebSocket error:", err);
+  };
+
+  ws.onclose = function() {
+    console.warn("WebSocket closed");
+  };
+</script>
+{% endblock body %}

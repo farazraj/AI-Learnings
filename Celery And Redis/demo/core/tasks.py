@@ -21,7 +21,7 @@ def process_submission(submission_id):
 
 @shared_task
 def process_contact_message(contact_id):
-    time.sleep(5)  # simulate delay for sending email
+    # time.sleep(5)  # simulate delay for sending email
     contact = ContactMessage.objects.get(id=contact_id)
     contact.processed = True
     contact.save()
@@ -47,7 +47,7 @@ def process_bulk_contacts(contacts_data):
             processed=False
         )
         # simulate processing (e.g., sending email)
-        time.sleep(1)
+        # time.sleep(1)
         obj.processed = True
         obj.save()
 

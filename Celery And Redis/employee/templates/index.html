@@ -4,35 +4,45 @@
 {% block title %}Home{% endblock title %}
 
 {% block body %}
-<div class="jumbotron">
-  <h1>{% if employee %}Update Employee{% else %}Add Employee{% endif %}</h1>
+<div class="container mt-4">
+  <div class="card shadow-lg border-0 rounded-lg">
+    <div class="card-header bg-dark text-white">
+      <h3 class="mb-0">{% if employee %}Update Employee{% else %}Add Employee{% endif %}</h3>
+    </div>
 
-  <form action="{% if employee %}{% url 'update_employee' employee.id %}{% else %}/{% endif %}" method="post">
-    {% csrf_token %}
+    <div class="card-body">
+      <!-- Form -->
+      <form action="{% if employee %}{% url 'update_employee' employee.id %}{% else %}/{% endif %}" method="post">
+        {% csrf_token %}
 
-    <label for="name">Name</label><br>
-    <input type="text" id="name" name="name" 
-           value="{{ employee.name|default:'' }}" 
-           placeholder="Employee Name" required><br><br>
+        <div class="form-group">
+          <label for="name" class="font-weight-bold">Name</label>
+          <input type="text" id="name" name="name" class="form-control"
+                 value="{{ employee.name|default:'' }}"
+                 placeholder="Employee Name" required>
+        </div>
 
-    <label for="phone">Phone</label><br>
-    <input type="tel" id="phone" name="phone" maxlength="12" 
-           value="{{ employee.phone|default:'' }}" 
-           placeholder="Employee Phone Number" required><br><br>
+        <div class="form-group">
+          <label for="phone" class="font-weight-bold">Phone</label>
+          <input type="tel" id="phone" name="phone" maxlength="12" class="form-control"
+                 value="{{ employee.phone|default:'' }}"
+                 placeholder="Employee Phone Number" required>
+        </div>
 
-    <button type="submit" class="btn btn-primary">
-      {% if employee %}Update{% else %}Submit{% endif %}
-    </button>
-  </form>
-
-  <br><br>
-
-  <script>
-    $(function() {
-      $("#name").autocomplete({
-        source: "{% url 'autocomplete_search' %}"
-      });
-    });
-  </script>
+        <button type="submit" class="btn btn-primary">
+          {% if employee %}Update{% else %}Submit{% endif %}
+        </button>
+      </form>
+    </div>
+  </div>
 </div>
+
+<!-- Autocomplete Script -->
+<script>
+  $(function() {
+    $("#name").autocomplete({
+      source: "{% url 'autocomplete_search' %}"
+    });
+  });
+</script>
 {% endblock body %}

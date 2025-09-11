@@ -20,8 +20,14 @@ def index(request):
             employee.name = request.POST.get('name')
             employee.phone = request.POST.get('phone')
             employee.save()
+            messages.success(request, "Employee added successfully..!!")
             return redirect("emplist")   # 👈 after saving go back to list
     return render(request, "index.html")
+
+@login_required
+def bulk_add(request):
+
+    return render(request, "bulk_add.html")
 
 
 #to write he database setting ton the settings file
@@ -79,6 +85,7 @@ def emplist(request):
 def delete_employee(request, pk):
     emp = get_object_or_404(Employee, id=pk)
     emp.delete()
+    messages.warning(request, "Employee deleted successfully..!!")
     return redirect("emplist")
 
 
@@ -90,6 +97,7 @@ def update_employee(request, pk):
         employee.name = request.POST.get("name")
         employee.phone = request.POST.get("phone")
         employee.save()
+        messages.success(request, "Employee Updated successfully..!!")
         return redirect("emplist")
 
     # reusing the same index.html template

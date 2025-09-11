@@ -7,6 +7,7 @@ admin.site.site_title = "Employee Admin Site"
 admin.site.index_title = "Employee Admin"
 urlpatterns = [
     path("",views.index, name="index"),
+    path("bulk_add/",views.bulk_add, name="bulk_add"),
     path('emplist/', views.emplist, name='emplist'),
     path('search/', views.search, name='search'),
     path('nav/', views.nav, name = 'nav'),
