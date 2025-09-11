@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'channels',
     "emp",
     "crispy_forms",
     "crispy_bootstrap4",
@@ -94,6 +95,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "employee.wsgi.application"
+ASGI_APPLICATION = "employee.asgi.application"  # replace "demo" with your project name
 
 
 # Database
@@ -185,7 +187,8 @@ MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = "media/"
 
 
-LOGIN_URL = '/login_user'
+LOGIN_URL = '/login_user/'   # 👈 matches your login route
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -193,5 +196,24 @@ LOGIN_URL = '/login_user'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # AUTH_USER_MODEL = 'emp.CustomUser'
+
+# ==== Celery / Redis ====
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+
+# Optional safety/timeouts
+CELERY_TASK_TIME_LIMIT = 60 * 60   # 1 hour
+CELERY_TASK_SOFT_TIME_LIMIT = 60 * 60
+
+
+# Redis channel layer
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],  # Redis running locally
+        },
+    },
+}
 
 

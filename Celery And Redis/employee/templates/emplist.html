@@ -6,8 +6,11 @@
 {% block body %}
 <div class="container mt-4">
   <div class="card shadow-lg border-0 rounded-lg">
-    <div class="card-header bg-dark text-white">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
       <h3 class="mb-0">Employee Records</h3>
+      <button id="delete-selected" class="btn btn-danger btn-sm" disabled>
+        Delete Selected
+      </button>
     </div>
 
     <div class="card-body">
@@ -51,18 +54,30 @@
 </div>
 
 <script>
-  // ✅ Select All toggle
   document.addEventListener("DOMContentLoaded", function () {
     const selectAll = document.getElementById("select-all");
     const checkboxes = document.querySelectorAll(".emp-checkbox");
+    const deleteSelectedBtn = document.getElementById("delete-selected");
 
+    // ✅ Enable/disable Delete Selected button
+    function toggleDeleteButton() {
+      const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+      deleteSelectedBtn.disabled = !anyChecked;
+    }
+
+    // ✅ Select All toggle
     if (selectAll) {
       selectAll.addEventListener("change", function () {
         checkboxes.forEach(cb => cb.checked = selectAll.checked);
+        toggleDeleteButton();
       });
     }
 
-    // ✅ Delete confirmation
+    checkboxes.forEach(cb => {
+      cb.addEventListener("change", toggleDeleteButton);
+    });
+
+    // ✅ Single delete confirmation
     document.querySelectorAll(".delete-btn").forEach(button => {
       button.addEventListener("click", function () {
         const empId = this.getAttribute("data-id");
@@ -70,6 +85,17 @@
           window.location.href = `/delete/${empId}/`;
         }
       });
+    });
+
+    // ✅ Bulk delete
+    deleteSelectedBtn.addEventListener("click", function () {
+      const selectedIds = Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+
+      if (selectedIds.length > 0 && confirm(`Delete ${selectedIds.length} selected employees?`)) {
+        window.location.href = "{% url 'delete_multiple' %}?ids=" + selectedIds.join(",");
+      }
     });
   });
 </script>

@@ -41,9 +41,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
           </li>
-          <li class="nav-item {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
+          {% comment %} <li class="nav-item {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
             <a class="nav-link" href="{% url 'register' %}">Register</a>
-          </li>
+          </li> {% endcomment %}
           {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout_user' %}">Logout</a>
