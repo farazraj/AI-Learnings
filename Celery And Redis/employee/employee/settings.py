@@ -205,6 +205,21 @@ CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
 CELERY_TASK_TIME_LIMIT = 60 * 60   # 1 hour
 CELERY_TASK_SOFT_TIME_LIMIT = 60 * 60
 
+# Timezone (important for scheduling)
+CELERY_TIMEZONE = "Asia/Kolkata"
+CELERY_ENABLE_UTC = False
+
+# Celery Beat Schedule
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    "delete-employees-midnight": {
+        "task": "emp.tasks.delete_all_employees",
+        "schedule": crontab(hour=0, minute=0),  # every day at midnight
+        # "schedule": 300.0, #every 5 minutes
+    },
+}
+
 
 # Redis channel layer
 CHANNEL_LAYERS = {

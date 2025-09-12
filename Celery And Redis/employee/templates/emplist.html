@@ -8,10 +8,19 @@
   <div class="card shadow-lg border-0 rounded-lg">
     <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
       <h3 class="mb-0">Employee Records</h3>
+      <div>
       <button id="delete-selected" class="btn btn-danger btn-sm" disabled>
         Delete Selected
       </button>
+     <a href="{% url 'delete_status_page' %}" 
+       class="btn btn-primary btn-sm" 
+       target="_blank" 
+       rel="noopener noreferrer">
+      Autonomous Delete Stat
+    </a>
     </div>
+    
+  </div>
 
     <div class="card-body">
       {% if employees %}

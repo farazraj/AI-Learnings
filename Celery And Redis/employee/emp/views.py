@@ -11,7 +11,7 @@ from .forms import UserForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import pandas as pd
-from emp.tasks import process_bulk_employee
+from emp.tasks import process_bulk_employee, delete_all_employees
 
 # Create your views here.
 @login_required
@@ -90,6 +90,13 @@ def delete_multiple(request):
         
 
     return redirect("emplist")  # redirect back to records page
+
+
+
+def delete_employees_ws_view(request):
+    delete_all_employees.delay()
+    messages.success(request, "Employee deletion started in background (with live updates).")
+    return redirect("delete_status_page")
 
 
 

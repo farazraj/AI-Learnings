@@ -1,0 +1,4 @@
+daphne: daphne -p 8000 employee.asgi:application
+celery_worker: celery -A employee worker -l info -P solo
+celery_beat: celery -A employee beat -l info
+redis: docker start -a redis

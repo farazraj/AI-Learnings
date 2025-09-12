@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Deletion Status</title>
+</head>
+<body>
+    <h1>Employee Deletion Status</h1>
+    <p>Deletes the employee data everyday midnight..!!</p>
+    <div id="status-box">Waiting for updates...</div>
+
+    <script>
+        const statusBox = document.getElementById("status-box");
+        const ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
+        const ws = new WebSocket(ws_scheme + "://" + window.location.host + "/ws/employee-status/");
+
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            statusBox.textContent = data.message; // 🔹 replaces old message (single line)
+        };
+    </script>
+</body>
+</html>

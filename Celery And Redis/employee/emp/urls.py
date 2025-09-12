@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from emp import views
+from django.shortcuts import render
 
 admin.site.site_header = "Employee Administration"
 admin.site.site_title = "Employee Admin Site"
@@ -16,6 +17,7 @@ urlpatterns = [
     path('logout_user/', views.logout_user, name= 'logout_user'),
     path("delete/<int:pk>/", views.delete_employee, name="delete_employee"),
     path("delete_multiple/", views.delete_multiple, name="delete_multiple"),
+    path("delete-status/", lambda r: render(r, "delete_status.html"), name="delete_status_page"),
     path("update/<int:pk>/", views.update_employee, name="update_employee"),
     path("autocomplete_search/",views.autocomplete_search, name = "autocomplete_search"),
 
