@@ -11,6 +11,28 @@ def timer(func):
 	return wrapper
 
 
+#Decorators with arguments
+
+#creating decoreator
+def repeat(n):
+	def decorator(func):
+		def wrapper(*args, **kwargs):
+			for _ in range(n):
+				func(*args, **kwargs)
+		return wrapper
+	return decorator
+
+#function to use that decorator
+@repeat(5)
+def say_hello(name):
+	print(f'Hello {name}')
+
+
+say_hello()
+
+
+
+
 
 #reverse a string with slicing
 @timer

@@ -2,4 +2,6 @@
 *.tar
 *.tar.gz
 Celery And Redis/cl_env/
+FastAPI_AI/fastai_env/
+att_rec/attenv/
 *.gz
