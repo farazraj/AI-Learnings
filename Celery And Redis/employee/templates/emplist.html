@@ -1,0 +1,111 @@
+{% extends "nav.html" %}
+{% load static %}
+
+{% block title %}Employee List{% endblock title %}
+
+{% block body %}
+<div class="container mt-4">
+  <div class="card shadow-lg border-0 rounded-lg">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">Employee Records</h3>
+      <div>
+      <button id="delete-selected" class="btn btn-danger btn-sm" disabled>
+        Delete Selected
+      </button>
+     <a href="{% url 'delete_status_page' %}" 
+       class="btn btn-primary btn-sm" 
+       target="_blank" 
+       rel="noopener noreferrer">
+      Autonomous Delete Stat
+    </a>
+    </div>
+    
+  </div>
+
+    <div class="card-body">
+      {% if employees %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="thead-dark">
+            <tr>
+              <th><input type="checkbox" id="select-all"></th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for obj in employees %}
+            <tr>
+              <td>
+                <input type="checkbox" class="emp-checkbox" value="{{ obj.id }}">
+              </td>
+              <td>{{ obj.name }}</td>
+              <td>{{ obj.phone }}</td>
+              <td class="text-center">
+                <a href="{% url 'update_employee' obj.id %}" class="btn btn-sm btn-primary">
+                  Update
+                </a>
+                <button class="btn btn-sm btn-danger delete-btn" data-id="{{ obj.id }}">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+        <p class="text-muted">No records found.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const selectAll = document.getElementById("select-all");
+    const checkboxes = document.querySelectorAll(".emp-checkbox");
+    const deleteSelectedBtn = document.getElementById("delete-selected");
+
+    // ✅ Enable/disable Delete Selected button
+    function toggleDeleteButton() {
+      const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+      deleteSelectedBtn.disabled = !anyChecked;
+    }
+
+    // ✅ Select All toggle
+    if (selectAll) {
+      selectAll.addEventListener("change", function () {
+        checkboxes.forEach(cb => cb.checked = selectAll.checked);
+        toggleDeleteButton();
+      });
+    }
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener("change", toggleDeleteButton);
+    });
+
+    // ✅ Single delete confirmation
+    document.querySelectorAll(".delete-btn").forEach(button => {
+      button.addEventListener("click", function () {
+        const empId = this.getAttribute("data-id");
+        if (confirm("Are you sure you want to delete this employee?")) {
+          window.location.href = `/delete/${empId}/`;
+        }
+      });
+    });
+
+    // ✅ Bulk delete
+    deleteSelectedBtn.addEventListener("click", function () {
+      const selectedIds = Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+
+      if (selectedIds.length > 0 && confirm(`Delete ${selectedIds.length} selected employees?`)) {
+        window.location.href = "{% url 'delete_multiple' %}?ids=" + selectedIds.join(",");
+      }
+    });
+  });
+</script>
+{% endblock body %}

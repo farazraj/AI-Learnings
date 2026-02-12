@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Name</title>
+</head>
+<body>
+    <h1>Submit Your Name</h1>
+
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Submissions</h2>
+    <ul>
+        {% for sub in submissions %}
+          <li>{{ sub.name }} - {{ sub.processed|yesno:"Done,Pending" }}</li>
+        {% empty %}
+          <li>No submissions yet</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

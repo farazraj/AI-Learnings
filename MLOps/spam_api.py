@@ -4,8 +4,8 @@ import joblib
 import pandas as pd
 
 # Load the trained model and vectorizer
-model = joblib.load("../NLP/spam_model.pkl")
-vectorizer = joblib.load("../NLP/vectorizer.pkl")
+model = joblib.load("../NLP/spam_classifier/spam_model.pkl")
+vectorizer = joblib.load("../NLP/spam_classifier/vectorizer.pkl")
 
 
 # Define input schema
