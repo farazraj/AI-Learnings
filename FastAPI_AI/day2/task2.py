@@ -79,3 +79,46 @@ def process_back(back_task:BackgroundTasks, y:int):
     else:
         back_task.add_task(write_log, "Not Started\n")
         return{"message":"Task failed"}
+
+    
+
+
+"""
+Mini “Resume Analyzer API” (no AI yet)
+
+Endpoints:
+
+Upload resume file
+
+Fake analyze (count words)
+
+Return word count
+
+Use BackgroundTask to save log
+
+Protect endpoint with simple token dependency
+
+"""
+
+from datetime import datetime
+from fastapi import Header
+
+def sec_tok(token:str= Header(...)):
+    if token != 'top':
+        raise HTTPException(status_code = 401, detail="Invalid token")
+    
+
+def write_log1(message:str):
+    with open("up_log.txt","a") as f:
+        f.write(message)
+
+@app.post("/res_analyse/")
+async def resume_analyser(bt:BackgroundTasks, tok = Depends(sec_tok),file:UploadFile = File(...)):
+    content = await file.read()
+    # try:
+    #     text = content.decode("utf-8")
+    # except:
+    #     raise HTTPException(status_code = 400, detail = "File must be text based")
+    bt.add_task(write_log1, f"Date : {datetime.now()}, filename:{file.filename}, words:{len(content.split())}\n")
+    return {"Message":"Analysing Done"}
+
